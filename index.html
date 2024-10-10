@@ -1,0 +1,42 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item List</title>
+</head>
+<body>
+    <h1>Items List</h1>
+    <div id="item-list"></div>
+
+    <script>
+        // Function to fetch and display data
+        function fetchData() {
+            fetch('data.json') // Replace with the path to your data file
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const itemList = document.getElementById('item-list');
+                    itemList.innerHTML = ''; // Clear existing content
+
+                    data.forEach(item => {
+                        const itemDiv = document.createElement('div');
+                        itemDiv.innerHTML = `<h2>${item.name}</h2><p>${item.description}</p>`;
+                        itemList.appendChild(itemDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+
+        // Call the fetchData function when the page loads
+        window.onload = fetchData;
+    </script>
+</body>
+</html>
+
